@@ -1,28 +1,23 @@
 import styled from "styled-components"
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-export default function HomePage() {
+export default function HomePage(props) {
+    const {filmes, setFilmes} = props;
+    
+  
+
+
+
     return (
         <PageContainer>
             Selecione o filme
-
             <ListContainer>
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
+            {filmes.map(filme => <Link key = {filme.id} to={`/sessoes/${filme.id}`}> <MovieContainer>
+                   <img src={filme.posterURL} alt="poster"/>
+                </MovieContainer></Link>)}       
             </ListContainer>
-
         </PageContainer>
     )
 }
