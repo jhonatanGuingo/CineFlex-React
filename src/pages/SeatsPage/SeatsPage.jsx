@@ -1,19 +1,29 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom"
 import styled from "styled-components"
 
 export default function SeatsPage() {
+    const {idSessao} = useParams();
+    const [seat, setSeat] = useState([]);
+    
+    useEffect(() => {
+        const promiseSeats = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`)
+        promiseSeats.then(resposta => setSeat(resposta.data));
 
+    }, []);
+    console.log(seat)
+    
     return (
         <PageContainer>
             Selecione o(s) assento(s)
-
+            {seat.length === 0 && <div>"loading"</div>}
+            {seat.length !== 0 && (
             <SeatsContainer>
-                <SeatItem>01</SeatItem>
-                <SeatItem>02</SeatItem>
-                <SeatItem>03</SeatItem>
-                <SeatItem>04</SeatItem>
-                <SeatItem>05</SeatItem>
-            </SeatsContainer>
+                {seat.seats.map( assento => <SeatItem available ={assento.isAvailable} >0{assento.name}</SeatItem>)}
 
+            </SeatsContainer>
+            )}
             <CaptionContainer>
                 <CaptionItem>
                     <CaptionCircle />
@@ -38,17 +48,18 @@ export default function SeatsPage() {
 
                 <button>Reservar Assento(s)</button>
             </FormContainer>
-
+            {seat.length === 0 && <div>"loading"</div>}
+            {seat.length !== 0 && (
             <FooterContainer>
                 <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                    <img src={seat.movie.posterURL} alt="poster" />
                 </div>
                 <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
-                    <p>Sexta - 14h00</p>
+                    <p>{seat.movie.title}</p>
+                    <p>{seat.day.weekday} - {seat.name}</p>
                 </div>
             </FooterContainer>
-
+            )}
         </PageContainer>
     )
 }
@@ -113,8 +124,8 @@ const CaptionItem = styled.div`
     font-size: 12px;
 `
 const SeatItem = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    border: 1px solid ${props => (props.available === true ? '#808F9D;' : '#F7C52B;')};         // Essa cor deve mudar
+    background-color: ${props => (props.available === true ? 'lightblue;' : '#FBE192;')};
     height: 25px;
     width: 25px;
     border-radius: 25px;

@@ -6,9 +6,6 @@ import { useEffect, useState } from "react";
 export default function HomePage(props) {
     const {filmes, setFilmes} = props;
     
-  
-
-
 
     return (
         <PageContainer>

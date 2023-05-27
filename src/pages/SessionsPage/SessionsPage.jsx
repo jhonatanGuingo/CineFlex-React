@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
 import axios from "axios";
 export default function SessionsPage() {
@@ -24,12 +24,15 @@ export default function SessionsPage() {
                 <>
             {days.map(day => <div>    
                 <SessionContainer>
+                    
                     {day.weekday} - {day.date}
-                    {day.showtimes.map(time => 
+                    <div>
+                    {day.showtimes.map(time => <Link key = {time.id} to={`/assentos/${time.id}`}>
                     <ButtonsContainer>
                         <button>{time.name}</button>
                         
-                    </ButtonsContainer>)}
+                    </ButtonsContainer></Link>)}
+                    </div>
                 </SessionContainer>
             </div>)}
 
@@ -69,16 +72,26 @@ const SessionContainer = styled.div`
     font-size: 20px;
     color: #293845;
     padding: 0 20px;
+    div{
+        display: flex;
+    }
 `
 const ButtonsContainer = styled.div`
     display: flex;
-    flex-direction: row;
     margin: 20px 0;
+    border-radius: 3px;
     button {
         margin-right: 20px;
-    }
-    a {
+        width: 83px;
+        height: 43px;
+        background: #E8833A;
+        border: none;
+        border-radius: 3px;
+    }    
+    
+    a{
         text-decoration: none;
+       
     }
 `
 const FooterContainer = styled.div`
