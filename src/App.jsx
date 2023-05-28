@@ -10,8 +10,12 @@ import axios from "axios"
 export default function App() {
     axios.defaults.headers.common['Authorization'] = 'vlGgSdWYuWevVEZOB1qCiUQE';
     const [filmes, setFilmes] = useState([]);
-    
-
+    const [seat, setSeat] = useState([]);
+    const [name, setName] = useState('');
+    const [id, setId] = useState([]);
+    const [cpf, setCPF] = useState('');
+    const [sessao, setSessao] = useState([]);
+    const [nameSeat, setNameSeat] = useState([]);
     useEffect(() => {
         const promiseLista = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies")
         promiseLista.then(resposta => {setFilmes(resposta.data)});
@@ -25,9 +29,9 @@ export default function App() {
            <NavContainer>CINEFLEX</NavContainer>
             <Routes>
             <Route path="/" element = {<HomePage filmes = {filmes} setFilmes = {setFilmes} />} />
-            <Route path="/sessoes/:idFilme" element = {<SessionsPage />} />
-            <Route path="/assentos/:idSessao" element = {<SeatsPage />} />
-            <Route path="/sucesso" element = {<SuccessPage />} />
+            <Route path="/sessoes/:idFilme" element = {<SessionsPage sessao = {sessao} setSessao = {setSessao} />} />
+            <Route path="/assentos/:idSessao" element = {<SeatsPage nameSeat = {nameSeat} setNameSeat = {setNameSeat} id = {id} setId = {setId} seat = {seat} setSeat = {setSeat} name = {name} setName = {setName} cpf = {cpf} setCPF = {setCPF} />} />
+            <Route path="/sucesso" element = {<SuccessPage nameSeat = {nameSeat} seat = {seat}  name = {name} cpf = {cpf} sessao = {sessao} />} />
             </Routes>
         </BrowserRouter>
         </>

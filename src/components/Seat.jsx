@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export default function Seat(props){
     const {seat, setSeat, assento} = props;
-    const {select, setSelect, id, setId} = props;
+    const {select, setSelect, id, setId, nameSeat, setNameSeat} = props;
     
     return(
         <>
@@ -10,18 +10,25 @@ export default function Seat(props){
          <SeatItem  onClick = {() => {
             if (id.includes(assento.id) === false && assento.isAvailable === true){
                 let novoID = [...id, assento.id];
+                let novoName = [...nameSeat, assento.name];
                 setId(novoID)
+                setNameSeat(novoName)
                 setSelect(true)
                 console.log(id,'estou no if')
              }else if(id.includes(assento.id) ){ 
                 let novoID = id.filter (item => item !== assento.id);
+                let novoName = nameSeat.filter (item => item !== assento.name);
                 setId(novoID);
+                setNameSeat(novoName)
                 setSelect(false);
                 console.log(select, id,'estou no else')
+             }else if(!assento.isAvailable){
+                alert('Esse assento não está disponível')
              }
          }
         }  
-            color = {assento.isAvailable === false ? '#F7C52B' : id.includes(assento.id) ? '#1AAE9E' : '#808F9D' } >
+            color = {assento.isAvailable === false ? '#FBE192' : id.includes(assento.id) ? '#1AAE9E' : '#C3CFD9' }
+            colorBorder = {assento.isAvailable === false ? '#F7C52B' : id.includes(assento.id) ? '#0E7D71' : '#808F9D' } >
             0{assento.name}
             </SeatItem>
         </>
@@ -29,7 +36,7 @@ export default function Seat(props){
 }
 
 const SeatItem = styled.div`
-    border: 1px solid ${props => props.color};         // Essa cor deve mudar
+    border: 1px solid ${props => props.colorBorder};         // Essa cor deve mudar
     background-color: ${props => props.color};
     height: 25px;
     width: 25px;

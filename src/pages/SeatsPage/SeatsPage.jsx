@@ -1,21 +1,31 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import Seat from "../../components/Seat";
 
-export default function SeatsPage() {
+export default function SeatsPage(props) {
     const {idSessao} = useParams();
-    const [seat, setSeat] = useState([]);
-    const [id, setId] = useState([])
-    const [select, setSelect] = useState(false)
-
+    const {seat, setSeat} = props;
+    const {nameSeat, setNameSeat, id, setId} = props;
+    const [select, setSelect] = useState(false);
+    const {name, setName} = props;
+    const {cpf, setCPF} = props;
+    const navigate = useNavigate()
     useEffect(() => {
         const promiseSeats = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`)
         promiseSeats.then(resposta => setSeat(resposta.data));
 
     }, []);
-  
+    function sucesso (event){
+        event.preventDefault();
+        const promiseSuccess = axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many', {
+            ids: id,
+            name: name,
+            cpf: cpf
+        })
+       promiseSuccess.then (() => navigate("/sucesso"))
+    }
 
     
     return (
@@ -25,32 +35,34 @@ export default function SeatsPage() {
             {seat.length !== 0 && (
             <SeatsContainer>
                 {seat.seats.map ( assento => 
-                <Seat seat = {seat} setSeat = {setSeat} select = {select} setSelect = {setSelect} assento = {assento} id = {id} setId = {setId}/>)}
+                <Seat nameSeat = {nameSeat} setNameSeat = {setNameSeat} seat = {seat} setSeat = {setSeat} select = {select} setSelect = {setSelect} assento = {assento} id = {id} setId = {setId}/>)}
             </SeatsContainer>
             )}
             <CaptionContainer>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle color = '#1AAE9E' colorBorder = '#0E7D71' />
                     Selecionado
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle color = '#C3CFD9' colorBorder = '#7B8B99' />
                     Disponível
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle color = '#FBE192' colorBorder = '#F7C52B' />
                     Indisponível
                 </CaptionItem>
             </CaptionContainer>
 
             <FormContainer>
-                Nome do Comprador:
-                <input placeholder="Digite seu nome..." />
+                <form onSubmit = {sucesso}>
+                    Nome do Comprador:
+                    <input type = "text" required value = {name} onChange = {e => setName (e.target.value)} placeholder="Digite seu nome..." />
 
-                CPF do Comprador:
-                <input placeholder="Digite seu CPF..." />
+                    CPF do Comprador:
+                    <input type = "number" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" required value = {cpf} onChange = {e => setCPF (e.target.value)} placeholder="Digite seu CPF..." />
 
-                <button>Reservar Assento(s)</button>
+                   <button type="submit">Reservar Assento(s)</button>
+                </form>
             </FormContainer>
             {seat.length === 0 && <div>"loading"</div>}
             {seat.length !== 0 && (
@@ -111,8 +123,8 @@ const CaptionContainer = styled.div`
     margin: 20px;
 `
 const CaptionCircle = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    border: 1px solid ${props => props.colorBorder};         // Essa cor deve mudar
+    background-color: ${props => props.color};    // Essa cor deve mudar
     height: 25px;
     width: 25px;
     border-radius: 25px;

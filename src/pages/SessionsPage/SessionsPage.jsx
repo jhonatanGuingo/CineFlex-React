@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
 import axios from "axios";
-export default function SessionsPage() {
+export default function SessionsPage(props) {
     const {idFilme} = useParams();
-    const [sessao, setSessao] = useState([]);
+    const {sessao, setSessao} = props;
     const {days} = sessao;
     useEffect(() => {
         const promiseSessao = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`)
@@ -29,7 +29,7 @@ export default function SessionsPage() {
                     <div>
                     {day.showtimes.map(time => <Link key = {time.id} to={`/assentos/${time.id}`}>
                     <ButtonsContainer>
-                        <button>{time.name}</button>
+                        <button >{time.name}</button>
                         
                     </ButtonsContainer></Link>)}
                     </div>
@@ -81,10 +81,12 @@ const ButtonsContainer = styled.div`
     margin: 20px 0;
     border-radius: 3px;
     button {
+        
         margin-right: 20px;
         width: 83px;
         height: 43px;
         background: #E8833A;
+        color: white;
         border: none;
         border-radius: 3px;
     }    
