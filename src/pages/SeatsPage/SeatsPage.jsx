@@ -114,6 +114,19 @@ const FormContainer = styled.div`
     font-size: 18px;
     button {
         align-self: center;
+        width: 225px;
+        height: 42px;
+        margin-top: 50px;
+        background: #E8833A;
+        border-radius: 3px;
+        color: white;
+        border: none;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+        letter-spacing: 0.04em;
+
     }
     input {
         width: calc(100vw - 60px);
