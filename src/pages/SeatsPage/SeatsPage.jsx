@@ -2,17 +2,21 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import styled from "styled-components"
+import Seat from "../../components/Seat";
 
 export default function SeatsPage() {
     const {idSessao} = useParams();
     const [seat, setSeat] = useState([]);
-    
+    const [id, setId] = useState([])
+    const [select, setSelect] = useState(false)
+
     useEffect(() => {
         const promiseSeats = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`)
         promiseSeats.then(resposta => setSeat(resposta.data));
 
     }, []);
-    console.log(seat)
+  
+
     
     return (
         <PageContainer>
@@ -20,8 +24,8 @@ export default function SeatsPage() {
             {seat.length === 0 && <div>"loading"</div>}
             {seat.length !== 0 && (
             <SeatsContainer>
-                {seat.seats.map( assento => <SeatItem available ={assento.isAvailable} >0{assento.name}</SeatItem>)}
-
+                {seat.seats.map ( assento => 
+                <Seat seat = {seat} setSeat = {setSeat} select = {select} setSelect = {setSelect} assento = {assento} id = {id} setId = {setId}/>)}
             </SeatsContainer>
             )}
             <CaptionContainer>
@@ -123,19 +127,7 @@ const CaptionItem = styled.div`
     align-items: center;
     font-size: 12px;
 `
-const SeatItem = styled.div`
-    border: 1px solid ${props => (props.available === true ? '#808F9D;' : '#F7C52B;')};         // Essa cor deve mudar
-    background-color: ${props => (props.available === true ? 'lightblue;' : '#FBE192;')};
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
-    font-family: 'Roboto';
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 3px;
-`
+
 const FooterContainer = styled.div`
     width: 100%;
     height: 120px;
