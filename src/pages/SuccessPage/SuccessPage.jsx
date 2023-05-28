@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 export default function SuccessPage(props) {
 const navigate = useNavigate()
-const {name,id, cpf, sessao, seat, nameSeat} = props;
+const {name,setName, setId, setCPF, setNameSeat, cpf, seat, nameSeat} = props;
     return (
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
@@ -25,7 +25,12 @@ const {name,id, cpf, sessao, seat, nameSeat} = props;
                 <p>CPF: {cpf}</p>
             </TextContainer>
 
-            <button onClick= {() => navigate('/')}>Voltar para Home</button>
+            <button onClick= {() => {
+                setName('');
+                setCPF('');
+                setId([]);
+                setNameSeat([]);
+                navigate('/')}}>Voltar para Home</button>
         </PageContainer>
     )
 }
@@ -44,8 +49,19 @@ const PageContainer = styled.div`
         text-decoration: none;
     }
     button {
+        width: 225px;
+        height: 42px;
         margin-top: 50px;
-    }
+        background: #E8833A;
+        border-radius: 3px;
+        color: white;
+        border: none;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+        letter-spacing: 0.04em;
+        }
     h1 {
         font-family: 'Roboto';
         font-style: normal;

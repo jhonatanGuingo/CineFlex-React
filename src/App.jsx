@@ -31,7 +31,7 @@ export default function App() {
             <Route path="/" element = {<HomePage filmes = {filmes} setFilmes = {setFilmes} />} />
             <Route path="/sessoes/:idFilme" element = {<SessionsPage sessao = {sessao} setSessao = {setSessao} />} />
             <Route path="/assentos/:idSessao" element = {<SeatsPage nameSeat = {nameSeat} setNameSeat = {setNameSeat} id = {id} setId = {setId} seat = {seat} setSeat = {setSeat} name = {name} setName = {setName} cpf = {cpf} setCPF = {setCPF} />} />
-            <Route path="/sucesso" element = {<SuccessPage nameSeat = {nameSeat} seat = {seat}  name = {name} cpf = {cpf} sessao = {sessao} />} />
+            <Route path="/sucesso" element = {<SuccessPage setId = {setId} setName = {setName} setCPF = {setCPF} setNameSeat = {setNameSeat} nameSeat = {nameSeat} seat = {seat}  name = {name} cpf = {cpf} sessao = {sessao} />} />
             </Routes>
         </BrowserRouter>
         </>

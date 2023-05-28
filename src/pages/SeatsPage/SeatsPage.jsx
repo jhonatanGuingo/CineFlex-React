@@ -18,6 +18,9 @@ export default function SeatsPage(props) {
 
     }, []);
     function sucesso (event){
+        if(id.length === 0){
+            alert('Você não selecionou um assento')
+        }else{
         event.preventDefault();
         const promiseSuccess = axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many', {
             ids: id,
@@ -25,6 +28,7 @@ export default function SeatsPage(props) {
             cpf: cpf
         })
        promiseSuccess.then (() => navigate("/sucesso"))
+    }
     }
 
     
