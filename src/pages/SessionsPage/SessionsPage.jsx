@@ -23,25 +23,24 @@ export default function SessionsPage(props) {
             {sessao.length !== 0 && ( 
                 <>
             {days.map(day => <div>    
-                <SessionContainer>
+                <SessionContainer data-test = "movie-day">
                     
                     {day.weekday} - {day.date}
                     <div>
                     {day.showtimes.map(time => <Link key = {time.id} to={`/assentos/${time.id}`}>
                     <ButtonsContainer>
-                        <button >{time.name}</button>
-                        
+                        <button data-test = "showtime">{time.name}</button>              
                     </ButtonsContainer></Link>)}
                     </div>
                 </SessionContainer>
             </div>)}
 
-            <FooterContainer>
+            <FooterContainer data-test = "footer">
                 <div>
                     <img src={sessao.posterURL} alt="poster" />
                 </div>
                 <div>
-                    <p>{sessao.overview}</p>
+                    <p>{sessao.title}</p>
                 </div>
             </FooterContainer>
             </>

@@ -7,7 +7,7 @@ export default function Seat(props){
     return(
         <>
 
-         <SeatItem  onClick = {() => {
+         <SeatItem data-test = "seat" onClick = {() => {
             if (id.includes(assento.id) === false && assento.isAvailable === true){
                 let novoID = [...id, assento.id];
                 let novoName = [...nameSeat, assento.name];

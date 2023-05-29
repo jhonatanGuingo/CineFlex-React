@@ -8,24 +8,24 @@ const {name,setName, setId, setCPF, setNameSeat, cpf, seat, nameSeat} = props;
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
-            <TextContainer>
+            <TextContainer data-test = "movie-info">
                 <strong><p>Filme e sessão</p></strong>
                 <p>{seat.movie.title}</p>
                 <p>{seat.day.date} - {seat.name}</p>
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer data-test = "seats-info">
                 <strong><p>Ingressos</p></strong>
                {nameSeat.map( assento => <p>Assento {assento}</p>)} 
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer data-test = "client-info">
                 <strong><p>Comprador</p></strong>
                 <p>Nome: {name}</p>
                 <p>CPF: {cpf}</p>
             </TextContainer>
 
-            <button onClick= {() => {
+            <button data-test = "go-home-btn" onClick= {() => {
                 setName('');
                 setCPF('');
                 setId([]);

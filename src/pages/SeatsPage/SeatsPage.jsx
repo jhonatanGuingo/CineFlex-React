@@ -60,17 +60,17 @@ export default function SeatsPage(props) {
             <FormContainer>
                 <form onSubmit = {sucesso}>
                     Nome do Comprador:
-                    <input type = "text" required value = {name} onChange = {e => setName (e.target.value)} placeholder="Digite seu nome..." />
+                    <input data-test = "client-name" type = "text" required value = {name} onChange = {e => setName (e.target.value)} placeholder="Digite seu nome..." />
 
                     CPF do Comprador:
-                    <input type = "number" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" required value = {cpf} onChange = {e => setCPF (e.target.value)} placeholder="Digite seu CPF..." />
+                    <input data-test = "client-cpf" type = "number" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" required value = {cpf} onChange = {e => setCPF (e.target.value)} placeholder="Digite seu CPF..." />
 
-                   <button type="submit">Reservar Assento(s)</button>
+                   <button data-test = "book-seat-btn" type="submit">Reservar Assento(s)</button>
                 </form>
             </FormContainer>
             {seat.length === 0 && <div>"loading"</div>}
             {seat.length !== 0 && (
-            <FooterContainer>
+            <FooterContainer data-test = "footer">
                 <div>
                     <img src={seat.movie.posterURL} alt="poster" />
                 </div>
