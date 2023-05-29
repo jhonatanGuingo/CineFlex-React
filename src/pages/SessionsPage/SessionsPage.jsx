@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import axios from "axios";
 export default function SessionsPage(props) {
     const {idFilme} = useParams();
     const {sessao, setSessao} = props;
     const {days} = sessao;
+    const navigate = useNavigate();
     useEffect(() => {
         const promiseSessao = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`)
         promiseSessao.then(resposta => {setSessao(resposta.data)});
@@ -27,10 +28,10 @@ export default function SessionsPage(props) {
                     
                     {day.weekday} - {day.date}
                     <div>
-                    {day.showtimes.map(time => <Link key = {time.id} to={`/assentos/${time.id}`}>
+                    {day.showtimes.map(time => 
                     <ButtonsContainer>
-                        <button data-test = "showtime">{time.name}</button>              
-                    </ButtonsContainer></Link>)}
+                        <button onClick = {() => {navigate(`/assentos/${time.id}`)}}data-test = "showtime">{time.name}</button>              
+                    </ButtonsContainer>)}
                     </div>
                 </SessionContainer>
             </div>)}
